@@ -1,0 +1,8 @@
+DROP TABLE IF EXISTS hamsters;
+
+CREATE TABLE hamsters (
+  id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+  name TEXT NOT NULL,
+  age INT CHECK (age > 0),
+  color TEXT
+);
