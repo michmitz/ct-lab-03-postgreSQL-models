@@ -40,6 +40,48 @@ describe('routes', () => {
     });
   });
 
+  it('gets all fruits', async() => {
+    const createdFruit = await Fruit.insert({
+      name: 'strawberry',
+      color: 'red',
+      weight: 3
+    });
+    const createdFruit2 = await Fruit.insert({
+      name: 'blueberry',
+      color: 'blue',
+      weight: 2
+    });
+    const createdFruit3 = await Fruit.insert({
+      name: 'peach',
+      color: 'yellow',
+      weight: 5
+    });
+
+    const response = await request(app)
+      .get('/api/v1/fruits/');
+
+    expect(response.body).toEqual(expect.arrayContaining([
+      {
+        id: createdFruit.id,
+        name: 'strawberry',
+        color: 'red',
+        weight: '3'
+      },
+      {
+        id: createdFruit2.id,
+        name: 'blueberry',
+        color: 'blue',
+        weight: '2'
+      },
+      {
+        id: createdFruit3.id,
+        name: 'peach',
+        color: 'yellow',
+        weight: '5' 
+      }
+    ]));
+  });
+
   it('deletes a fruit by id via DELETE', async() => {
     const createdFruit = await Fruit.insert({
       name: 'strawberry',
