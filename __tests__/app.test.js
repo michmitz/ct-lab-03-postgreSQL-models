@@ -22,6 +22,24 @@ describe('routes', () => {
     });
   });
 
+  it('finds a fruit by id via GET', async() => {
+    const createdFruit = await Fruit.insert({
+      name: 'strawberry',
+      color: 'red',
+      weight: 3
+    });
+
+    const response = await request(app)
+      .get(`/api/v1/fruits/${createdFruit.id}`);
+
+    expect(response.body).toEqual({
+      id: createdFruit.id,
+      name: 'strawberry',
+      color: 'red',
+      weight: '3'
+    });
+  });
+
   it('deletes a fruit by id via DELETE', async() => {
     const createdFruit = await Fruit.insert({
       name: 'strawberry',
