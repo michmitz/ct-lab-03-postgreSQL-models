@@ -82,6 +82,31 @@ describe('routes', () => {
     ]));
   });
 
+  it('updates a fruit via PUT', async() => {
+    const createdFruit = await Fruit.insert({
+      name: 'strawberry',
+      color: 'red',
+      weight: 3
+    });
+
+    const updatedFruit = {
+      name: 'strawberry',
+      color: 'ultrared',
+      weight: 8
+    };
+
+    const response = await request(app)
+      .put(`/api/v1/fruits/${createdFruit.id}`)
+      .send(updatedFruit);
+
+    expect(response.body).toEqual({
+      name: 'strawberry',
+      color: 'ultrared',
+      weight: expect.any(String),
+      id: createdFruit.id
+    });
+  });
+
   it('deletes a fruit by id via DELETE', async() => {
     const createdFruit = await Fruit.insert({
       name: 'strawberry',
